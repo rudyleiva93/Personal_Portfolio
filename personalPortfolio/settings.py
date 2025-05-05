@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 
 env = environ.Env()
 environ.Env.read_env()
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'personalPortfolio.urls'
@@ -83,6 +85,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
+        # Will add postgres DB in the future
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ.get('DB_NAME', 'portfolio_db'),
+        # 'USER': os.environ.get('DB_USER', 'postgres'),
+        # 'PASSWORD': os.environ.get('DB_PASSWORD', '1234'),
+        # 'HOST': os.environ.get('DB_HOST', 'portfolioDB'),
+        # 'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -125,5 +135,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# For deplyment, set STATIC_ROOT to the directory where you want to collect static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

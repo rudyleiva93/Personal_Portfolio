@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: portfolio:latest
+    container_name: myPortfolio
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/rleiva/data/portfolioMedia:/app/media
+    depends_on:
+      - db
+    environment:
+      - DEBUG=0
+
+  # Will add postgreSQL db in the future
+  # db:
+  #   image: postgres:latest
+  #   container_name: portfolioDB
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     Test pw. Will not use for deployment!
+  #     POSTGRES_PASSWORD: 1234
+  #     POSTGRES_DB: portfolio_db
+  #   volumes:
+  #     - /home/rleiva/data/postgresData:/var/lib/postgresql/data:/var/lib/postgresql/data
